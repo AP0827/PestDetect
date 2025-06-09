@@ -56,6 +56,7 @@ runs/detect/train/
   - confusion_matrix.png
   - F1_curve.png
   - PR_curve.png
+
 To re-evaluate manually:
 yolo val model=runs/detect/train/weights/best.pt data=data.yaml imgsz=640
 
