@@ -39,9 +39,9 @@ We aim to aid agricultural monitoring systems with **fast and reliable pest iden
 - 📦 Export to ONNX, TensorFlow, and CoreML supported
 
 ### 🛠️ Installation
-
 ```bash
 pip install -r requirements.txt
+```
 Where requirements.txt includes:
 ultralytics
 opencv-python
@@ -49,7 +49,7 @@ matplotlib
 numpy
 scikit-learn
 seaborn
-### **📊 Evaluation & Metrics**
+### 📊 Evaluation & Metrics
 All evaluation metrics are automatically computed after training and stored under:
 runs/detect/train/
   - results.png         # Training curves
@@ -59,7 +59,7 @@ runs/detect/train/
 To re-evaluate manually:
 yolo val model=runs/detect/train/weights/best.pt data=data.yaml imgsz=640
 
-🐞 High Precision Pest Detections
+### 🐞 High Precision Pest Detections
 Some pest classes that achieved notably high precision in validation/testing:
 
   -  ✅ Lycorma delicatula
