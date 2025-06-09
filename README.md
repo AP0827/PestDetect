@@ -58,8 +58,9 @@ runs/detect/train/
   - PR_curve.png
 
 To re-evaluate manually:
+```bash
 yolo val model=runs/detect/train/weights/best.pt data=data.yaml imgsz=640
-
+```
 ### 🐞 High Precision Pest Detections
 Some pest classes that achieved notably high precision in validation/testing:
 
