@@ -1,78 +1,70 @@
-README
+# 🐛 Pest Detection using YOLOv8n 🚀
 
-Title: Pest Detection Using YOLOv8 and Faster R-CNN
+This project implements a lightweight and accurate **pest detection system** using **YOLOv8n** from Ultralytics. It benchmarks pest recognition across a **custom dataset** inspired by real-world agricultural pest distributions like IP102.
 
-This project benchmarks two powerful object detection models — YOLOv8 and Faster R-CNN — for pest detection. The dataset used is inspired by large-scale datasets like IP102, containing multiple pest species across various crop types.
+We aim to aid agricultural monitoring systems with **fast and reliable pest identification**, focusing on ease of deployment, real-time inference, and clarity in evaluation metrics like **mAP**, **IoU**, and **Confusion Matrix**.
 
-Dataset Description:
+---
 
-We use a custom pest dataset with labeled images for classification and object detection tasks.
+## 📦 Dataset Description
 
-Contains over XX,XXX images across multiple pest categories
+- **Custom dataset** with labeled pest images (bounding boxes included)
+- Directory structure:
+- **Over 18,000+ images** (placeholder; replace with actual count)
+- **Hierarchical pest labels** (e.g., `caterpillar` → `maize pest`)
+- Long-tailed class distribution (realistic to field conditions)
+- **Split using** `image_split.py` into `train`, `val`, `test`
 
-Includes bounding boxes for detection
+📂 `classes.txt` contains the pest class names  
+📂 Labels are in **YOLO format** (`.txt` files matching image names)
 
-Hierarchical labels (example: caterpillar -> maize pests)
+---
 
-Long-tailed data distribution typical of real-world field conditions
+## 📈 Noteworthy Pest Classes with High Precision
 
-Download the dataset from:
+✅ `Lycorma delicatula`  
+✅ `Mole Cricket`  
+✅ `Paddy Stem Maggot`  
+✅ `Green Bug`  
+✅ `Cerodonta denticornis`
 
-Google Drive: [Insert Link]
-Aliyun Drive (optional): [Insert Link]
+---
 
-Class names are listed in the file classes.txt.
+## 🧠 Model: YOLOv8n (Ultralytics)
 
-Model 1: YOLOv8 (Ultralytics)
+- 🔬 Architecture: CNN-based, with C2f blocks and decoupled heads  
+- ⚡ Real-time performance suitable for embedded devices  
+- 🔁 Anchor-free detection  
+- 📊 Built-in evaluation: `mAP`, `IoU`, `Precision`, `Recall`, `Confusion Matrix`  
+- 📦 Export to ONNX, TensorFlow, and CoreML supported
 
-Architecture: CNN-based with C2f blocks
-Detection: Anchor-free, decoupled classification and regression head
+### 🛠️ Installation
 
-Advantages:
+```bash
+pip install -r requirements.txt
+Where requirements.txt includes:
+ultralytics
+opencv-python
+matplotlib
+numpy
+scikit-learn
+seaborn
+### **📊 Evaluation & Metrics**
+All evaluation metrics are automatically computed after training and stored under:
+runs/detect/train/
+  - results.png         # Training curves
+  - confusion_matrix.png
+  - F1_curve.png
+  - PR_curve.png
+To re-evaluate manually:
+yolo val model=runs/detect/train/weights/best.pt data=data.yaml imgsz=640
 
-Real-time performance
+🐞 High Precision Pest Detections
+Some pest classes that achieved notably high precision in validation/testing:
 
-Built-in evaluation metrics: mAP, IoU, confusion matrix
-
-Easy export to ONNX, TensorFlow, and CoreML formats
-
-Suitable for edge deployment
-
-Installation:
-pip install ultralytics
-
-Training Example:
-yolo detect train model=yolov8s.pt data=data.yaml epochs=50 imgsz=640
-
-Export Model:
-yolo export model=path/to/best.pt format=onnx
-
-Model 2: Faster R-CNN (Detectron2)
-
-Architecture: ResNet-50 with Feature Pyramid Network, Region Proposal Network (RPN), and RoIAlign
-
-Advantages:
-
-High accuracy, especially on small object detection
-
-Strong bounding box refinement
-
-Good for complex and dense pest images
-
-Installation:
-
-pip install torch torchvision torchaudio
-pip install git+https://github.com/facebookresearch/detectron2.git
-
-Dataset Registration:
-
-from detectron2.data.datasets import register_coco_instances
-register_coco_instances("pest_train", {}, "annotations/train.json", "images/train")
-
-Training Command:
-
-python train_net.py --config-file configs/COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml --num-gpus 1 OUTPUT_DIR ./output
-
-Export Model (TorchScript):
-
-torch.jit.save(torch.jit.trace(model, dummy_input), "faster_rcnn_model.pt"
+  -  ✅ Lycorma delicatula
+  -  ✅ Mole Cricket
+  -  ✅ Paddy Stem Maggot
+  -  ✅ Green Bug
+  -  ✅ Cerodonta denticornis
+These species had distinct visual features, leading to confident bounding boxes and low false positives.
